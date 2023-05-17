@@ -1,7 +1,8 @@
 import React from 'react'
-import { Button, Space, Table, Tag } from 'antd';
+import { Button, Space, Table, Popconfirm } from 'antd';
 
-const ListComponent = ({ users, handleDelete, handleEdit}) => {
+
+const ListComponent = ({ users, handleDelete, handleEdit, tableLoading }) => {
 
   const columns = [
     {
@@ -32,14 +33,22 @@ const ListComponent = ({ users, handleDelete, handleEdit}) => {
       title: 'Delete',
       key: 'delete',
       render: (_, k) => (
-        <Button danger onClick={() => { handleDelete(k) }}>Delete</Button>
+        <Popconfirm
+          title="Delete the User"
+          description="Are you sure to delete this User?"
+          okText="Yes"
+          cancelText="No"
+          onConfirm={() => { handleDelete(k) }}
+        >
+          <Button danger >Delete</Button>
+        </Popconfirm>
       ),
     },
   ];
 
   return (
     <>
-      <Table columns={columns} dataSource={users} />
+      <Table columns={columns} dataSource={users} loading={tableLoading} />
     </>
   )
 }

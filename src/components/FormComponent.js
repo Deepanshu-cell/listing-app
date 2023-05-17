@@ -1,23 +1,33 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Button, Form, Input, message } from 'antd';
+import { INSERT_USER } from '../API/Api_methods';
 
-const FormComponent = ({ setUsers, users }) => {
+const FormComponent = ({ setUsers, users, getUsers }) => {
   const [messageApi, contextHolder] = message.useMessage();
 
   const formRef = React.createRef();
 
-  const onFinish = (values) => {
+  const onFinish = async (values) => {
     if (formValidation(values)) {
       values.key = users.length + 1;
-      let newUsers = [...users, values];
-      setUsers(newUsers);
       formRef.current.resetFields();
-      messageApi.open({
-        duration: 2,
-        type: 'success',
-        content: 'Form data submitted successfully',
-      });
+      const res = await INSERT_USER(values);
+      if (res._id) {
+        getUsers();
+        messageApi.open({
+          duration: 2,
+          type: 'success',
+          content: 'User inserted successfully',
+        });
+      } else {
+        messageApi.open({
+          duration: 2,
+          type: 'warning',
+          content: 'Error Inserting data',
+        });
+      }
     }
+
   };
 
 
@@ -34,14 +44,14 @@ const FormComponent = ({ setUsers, users }) => {
       return false;
     }
 
-    // if (mobile.length < 10 || mobile.length > 10) {
-    //   messageApi.open({
-    //     duration: 2,
-    //     type: 'warning',
-    //     content: 'Phone number must be of 10 digits',
-    //   });
-    //   return false;
-    // }
+    if (mobile.length < 10 || mobile.length > 10) {
+      messageApi.open({
+        duration: 2,
+        type: 'warning',
+        content: 'Phone number must be of 10 digits',
+      });
+      return false;
+    }
 
     return true
   }
@@ -92,7 +102,7 @@ const FormComponent = ({ setUsers, users }) => {
         </Form.Item>
 
         <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-          <Button type="primary" htmlType="submit">
+          <Button type="primary" htmlType="submit" >
             Submit
           </Button>
         </Form.Item>
