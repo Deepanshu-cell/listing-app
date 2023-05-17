@@ -1,60 +1,40 @@
 import React, { useState } from 'react';
-import { Button, Modal, Form, Input } from 'antd';
+import { Modal } from 'antd';
+import Button from 'react-bootstrap/Button';
+import Form from 'react-bootstrap/Form';
 
-const EditModal = ({ isModalOpen, setIsModalOpen, handleOk, handleCancel, editUser }) => {
+const EditModal = ({ isModalOpen, setIsModalOpen, handleOk, handleCancel, editUser, setEditUser }) => {
 
-    const formRef = React.createRef();
+
+    const handleChange = (e) => {
+        setEditUser({
+            ...editUser,
+            [e.target.name]: e.target.value
+        })
+
+    }
 
     return (
         <>
-            <Button type="primary" onClick={() => { setIsModalOpen(true) }}>
-                Open Modal
-            </Button>
-            <Modal title="Basic Modal" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
-                <Form
-                    ref={formRef}
-                    name="basic"
-                    labelCol={{ span: 8 }}
-                    wrapperCol={{ span: 16 }}
-                    style={{ maxWidth: 600 }}
-                    initialValues={{ remember: true }}
-                    onFinish={onFinish}
-                    autoComplete="off"
-                >
-                    <Form.Item
-                        label="Name"
-                        name="name"
-                        rules={[{ required: true, message: 'Please input your name!' }]}
-                        initialValue={editUser?.name}
-                    >
-                        <Input size='large' />
-                    </Form.Item>
 
-                    <Form.Item
-                        label="Mobile"
-                        name="mobile"
-                        rules={[{ required: true }]}
-                        initialValue={editUser?.mobile}
-                    >
-                        <Input size='large' />
-                    </Form.Item>
+            <Modal title="Edit User" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
+                <Form>
+                    <Form.Group className="mb-3" controlId="formBasicPassword">
+                        <Form.Label>Name</Form.Label>
+                        <Form.Control type="text" placeholder="Name" name="name" value={editUser?.name} onChange={(e) => { handleChange(e) }} />
+                    </Form.Group>
 
-                    <Form.Item
-                        label="Email"
-                        name="email"
-                        rules={[{ required: true, type: "email" }]}
-                        initialValue={editUser?.email}
-                    >
-                        <Input size='large' />
-                    </Form.Item>
+                    <Form.Group className="mb-3" controlId="formBasicPassword">
+                        <Form.Label>Mobile</Form.Label>
+                        <Form.Control type="text" placeholder="Mobile" value={editUser?.mobile} name="mobile" onChange={(e) => { handleChange(e) }} />
+                    </Form.Group>
 
-                    {/* <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-                        <Button type="primary" htmlType="submit">
-                            Submit
-                        </Button>
-                    </Form.Item> */}
+                    <Form.Group className="mb-3" controlId="formBasicEmail">
+                        <Form.Label>Email address</Form.Label>
+                        <Form.Control type="email" placeholder="Enter email" value={editUser?.email} name='email' onChange={(e) => { handleChange(e) }} />
+                    </Form.Group>
+
                 </Form>
-
             </Modal>
         </>
     );

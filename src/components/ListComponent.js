@@ -1,7 +1,7 @@
 import React from 'react'
 import { Button, Space, Table, Tag } from 'antd';
 
-const ListComponent = ({users,handleDelete,handleEdit}) => {
+const ListComponent = ({ users, handleDelete, handleEdit}) => {
 
   const columns = [
     {
@@ -24,15 +24,15 @@ const ListComponent = ({users,handleDelete,handleEdit}) => {
       title: 'Edit',
       key: 'edit',
       dataIndex: 'edit',
-      render: (_,k) => (
-        <Button type='primary' onClick={()=>{handleEdit(k)}}>Edit</Button>
+      render: (_, k) => (
+        <Button type='primary' onClick={() => { handleEdit(k) }}>Edit</Button>
       ),
     },
     {
       title: 'Delete',
       key: 'delete',
-      render: (_,k) => (
-        <Button danger onClick={()=>{handleDelete(k)}}>Delete</Button>
+      render: (_, k) => (
+        <Button danger onClick={() => { handleDelete(k) }}>Delete</Button>
       ),
     },
   ];

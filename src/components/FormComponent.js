@@ -34,14 +34,14 @@ const FormComponent = ({ setUsers, users }) => {
       return false;
     }
 
-    if (mobile.length < 10 || mobile.length > 10) {
-      messageApi.open({
-        duration: 2,
-        type: 'warning',
-        content: 'Phone number must be of 10 digits',
-      });
-      return false;
-    }
+    // if (mobile.length < 10 || mobile.length > 10) {
+    //   messageApi.open({
+    //     duration: 2,
+    //     type: 'warning',
+    //     content: 'Phone number must be of 10 digits',
+    //   });
+    //   return false;
+    // }
 
     return true
   }
